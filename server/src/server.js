@@ -15,7 +15,10 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: [
+        'http://localhost:5173',
+        'https://task-tracker-one-teal.vercel.app',
+    ],
 };
 
 app.use(cors(corsOptions));
