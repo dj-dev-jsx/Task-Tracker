@@ -2,7 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const sequelize = require('./config/database');
+
 const { User, Category, Task } = require('./models');
+
+// Import routes
 const authRoutes = require('./routes/authRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const taskRoutes = require('./routes/taskRoutes');
@@ -21,6 +24,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/tasks', taskRoutes);
 
+// Health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({
         message: 'API is running',
@@ -29,6 +33,7 @@ app.get('/api/health', (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 
+// Start the server and connect to the database
 const startServer = async () => {
     try {
         await sequelize.authenticate();

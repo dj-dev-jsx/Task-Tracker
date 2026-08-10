@@ -1,10 +1,55 @@
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate,
+} from 'react-router-dom';
+
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Tasks from './pages/Tasks';
+
+function ProtectedRoute({ children }) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        return <Navigate to="/login" replace />;
+    }
+
+    return children;
+}
+
 function App() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <h1 className="text-4xl font-bold text-blue-600">
-                Task Tracker
-            </h1>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
+
+                <Route
+                    path="/register"
+                    element={<Register />}
+                />
+
+                <Route
+                    path="/tasks"
+                    element={
+                        <ProtectedRoute>
+                            <Tasks />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="*"
+                    element={
+                        <Navigate to="/tasks" replace />
+                    }
+                />
+            </Routes>
+        </BrowserRouter>
     );
 }
 

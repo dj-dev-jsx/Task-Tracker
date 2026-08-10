@@ -1,5 +1,6 @@
 const { Category } = require('../models');
 
+// Get all categories
 const getCategories = async (req, res) => {
     try {
         const categories = await Category.findAll({
@@ -18,6 +19,7 @@ const getCategories = async (req, res) => {
     }
 };
 
+// Create a new category
 const createCategory = async (req, res) => {
     try {
         const { name } = req.body;

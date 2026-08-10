@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const { Task, Category } = require('../models');
 
+// Get all tasks for the logged-in user with filters
 const getTasks = async (req, res) => {
     try {
         const {
@@ -68,6 +69,7 @@ const getTasks = async (req, res) => {
     }
 };
 
+// Get a specific task by ID for the logged-in user
 const getTaskById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -103,6 +105,7 @@ const getTaskById = async (req, res) => {
     }
 };
 
+// Create a new task for the logged-in user
 const createTask = async (req, res) => {
     try {
         const {
@@ -178,6 +181,7 @@ const createTask = async (req, res) => {
     }
 };
 
+// Update an existing task for the logged-in user
 const updateTask = async (req, res) => {
     try {
         const { id } = req.params;

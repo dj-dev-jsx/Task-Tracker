@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
+// Register a new user
 const register = async (req, res) => {
     try {
         const { name, email, password, confirmPassword } = req.body;
@@ -50,6 +51,7 @@ const register = async (req, res) => {
     }
 };
 
+// Login an existing user
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -109,6 +111,7 @@ const login = async (req, res) => {
     }
 };
 
+// Get the currently logged-in user's information
 const me = async (req, res) => {
     try {
         const user = await User.findByPk(req.user.id, {
