@@ -5,6 +5,7 @@ const sequelize = require('./config/database');
 const { User, Category, Task } = require('./models');
 const authRoutes = require('./routes/authRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/tasks', taskRoutes);
 
 app.get('/api/health', (req, res) => {
     res.json({
