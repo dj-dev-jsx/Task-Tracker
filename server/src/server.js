@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const sequelize = require('./config/database');
+const { User, Category, Task } = require('./models');
 
 dotenv.config();
 
@@ -28,11 +29,15 @@ const startServer = async () => {
 
         console.log('Database connected successfully');
 
+        await sequelize.sync();
+
+        console.log('Database tables synchronized');
+
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });
     } catch (error) {
-        console.error('Unable to connect to database:', error);
+        console.error('Unable to start server:', error);
     }
 };
 
