@@ -16,6 +16,24 @@ Users can register, log in, create categories, and manage their own tasks with s
 - Deployment: Vercel(Frontend), Railway(Backend and Database)
 - Source Control: Git and GitHub
 
+### Features
+- User registration
+- User login and JWT authentication
+- Protected API routes
+- User-specific task management
+- Category management
+- Create tasks
+- View tasks
+- Update tasks
+- Delete tasks
+- Task search
+- Task filtering
+- Sorting by due date and status
+- Task pagination
+- Basic request validation
+- Error handling
+- Responsive frontend UI
+
 ## Project Structure
 
 task-tracker/
@@ -106,23 +124,6 @@ The frontend is configured to run on `http://localhost:5173`.
 ### Database
 
 - The application uses MySQL with Sequelize ORM. The database contains related entities for users, categories, and tasks. Tasks are associated with users and categories, allowing authenticated users to manage their own task data. Sequelize automatically synchronizes the database models when the backend starts.
-
-### Features
-- User registration
-- User login and JWT authentication
-- Protected API routes
-- User-specific task management
-- Category management
-- Create tasks
-- View tasks
-- Update tasks
-- Delete tasks
-- Task search
-- Task filtering
-- Task pagination
-- Basic request validation
-- Error handling
-- Responsive frontend UI
 
 ## Known Limitations
 - Task search is limited to title matching.

@@ -10,6 +10,8 @@ const getTasks = async (req, res) => {
             search,
             page = 1,
             limit = 10,
+            sort_by = 'createdAt',
+            sort_order = 'DESC',
         } = req.query;
 
         const currentPage = Math.max(parseInt(page, 10) || 1, 1);
@@ -38,6 +40,15 @@ const getTasks = async (req, res) => {
             };
         }
 
+        const allowedSortFields = {
+            due_date: 'due_date',
+            status: 'status',
+            createdAt: 'createdAt',
+        };
+
+        const sortField = allowedSortFields[sort_by] || 'createdAt';
+        const sortDirection = String(sort_order).toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
         const { count, rows } = await Task.findAndCountAll({
             where,
             include: [
@@ -46,7 +57,7 @@ const getTasks = async (req, res) => {
                     attributes: ['id', 'name'],
                 },
             ],
-            order: [['createdAt', 'DESC']],
+            order: [[sortField, sortDirection]],
             limit: pageLimit,
             offset,
         });

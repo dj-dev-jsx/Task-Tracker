@@ -22,6 +22,8 @@ export default function Tasks() {
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState('');
     const [categoryId, setCategoryId] = useState('');
+    const [sortBy, setSortBy] = useState('due_date');
+    const [sortOrder, setSortOrder] = useState('ASC');
 
     const [page, setPage] = useState(1);
     const [pagination, setPagination] = useState({
@@ -39,6 +41,8 @@ export default function Tasks() {
             const params = {
                 page,
                 limit: 5,
+                sort_by: sortBy,
+                sort_order: sortOrder,
             };
 
             if (search) params.search = search;
@@ -76,7 +80,7 @@ export default function Tasks() {
     // Use effects to fetch tasks and categories on component mount and when filters change
     useEffect(() => {
         fetchTasks();
-    }, [page, status, categoryId, search]);
+    }, [page, status, categoryId, search, sortBy, sortOrder]);
 
     useEffect(() => {
         fetchCategories();
@@ -220,7 +224,7 @@ export default function Tasks() {
                         </button>
                     </div>
                 </div>
-                
+
                 <TaskForm
                     categories={categories}
                     isOpen={isCreateModalOpen}
@@ -327,7 +331,7 @@ export default function Tasks() {
                 </div>
 
                 <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-4 xl:grid-cols-5">
                         <input
                             type="text"
                             placeholder="Search tasks..."
@@ -351,6 +355,30 @@ export default function Tasks() {
                             <option value="pending">Pending</option>
                             <option value="in_progress">In Progress</option>
                             <option value="completed">Completed</option>
+                        </select>
+
+                        <select
+                            value={sortBy}
+                            onChange={(e) => {
+                                setSortBy(e.target.value);
+                                setPage(1);
+                            }}
+                            className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-slate-400 focus:bg-white"
+                        >
+                            <option value="due_date">Sort by Due Date</option>
+                            <option value="status">Sort by Status</option>
+                        </select>
+
+                        <select
+                            value={sortOrder}
+                            onChange={(e) => {
+                                setSortOrder(e.target.value);
+                                setPage(1);
+                            }}
+                            className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm outline-none transition focus:border-slate-400 focus:bg-white"
+                        >
+                            <option value="ASC">Ascending</option>
+                            <option value="DESC">Descending</option>
                         </select>
 
                         <select
