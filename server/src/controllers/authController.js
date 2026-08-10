@@ -1,6 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const {
+    recordFailedLoginAttempt,
+    resetLoginAttempts,
+} = require('../middleware/rateLimitMiddleware');
 
 // Register a new user
 const register = async (req, res) => {
@@ -67,6 +71,9 @@ const login = async (req, res) => {
         });
 
         if (!user) {
+            if (req.loginRateLimitKey) {
+                recordFailedLoginAttempt(req.loginRateLimitKey);
+            }
             return res.status(401).json({
                 message: 'Invalid email or password',
             });
@@ -78,6 +85,9 @@ const login = async (req, res) => {
         );
 
         if (!passwordMatch) {
+            if (req.loginRateLimitKey) {
+                recordFailedLoginAttempt(req.loginRateLimitKey);
+            }
             return res.status(401).json({
                 message: 'Invalid email or password',
             });
@@ -92,6 +102,10 @@ const login = async (req, res) => {
                 expiresIn: '1d',
             }
         );
+
+        if (req.loginRateLimitKey) {
+            resetLoginAttempts(req.loginRateLimitKey);
+        }
 
         res.json({
             message: 'Login successful',
